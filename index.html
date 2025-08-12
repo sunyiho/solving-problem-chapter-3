@@ -62,11 +62,7 @@
             <div id="tab-content-diagram" class="space-y-6">
                 <div class="p-4 rounded-lg border-2 border-red-400 bg-red-50 shadow-md mt-4">
                     <p class="text-center text-xl font-bold text-red-700">
-                        一项比赛的冠军可获得 RM64 740 的奖金，比季军的奖金多5倍。
-                        <br />
-                        亚军可获得的奖金是季军的2倍。
-                        <br />
-                        计算亚军可获得的奖金。
+                        一项比赛的冠军可获得 RM64 740 的奖金，比季军的奖金多5倍。亚军可获得的奖金是季军的2倍。计算亚军可获得的奖金。
                     </p>
                 </div>
                 <p class="text-center text-gray-600">小朋友们，让我们用画图的方式把题目中的关系看清楚吧！</p>
@@ -76,7 +72,7 @@
                     <!-- 冠军奖金条 -->
                     <div class="flex items-center space-x-4 w-full">
                         <span class="w-1/6 font-bold text-lg text-indigo-700">冠军:</span>
-                        <div class="flex flex-grow rounded-lg overflow-hidden border-2 border-black">
+                        <div class="flex flex-grow rounded-lg border-2 border-black overflow-hidden">
                             <!-- 冠军有6个方块 -->
                             <div class="w-1/6 bg-yellow-400 border-r-2 border-black h-10"></div>
                             <div class="w-1/6 bg-yellow-400 border-r-2 border-black h-10"></div>
@@ -94,7 +90,7 @@
                         <div class="flex flex-grow rounded-lg overflow-hidden border-2 border-black">
                             <!-- 亚军有2个方块 -->
                             <div class="w-1/6 bg-green-400 border-r-2 border-black h-10"></div>
-                            <div class="w-1/6 bg-green-400 h-10"></div>
+                            <div class="w-1/6 bg-green-400 border-r-2 border-black h-10"></div>
                         </div>
                         <span class="w-1/6"></span>
                     </div>
@@ -103,8 +99,8 @@
                     <div class="flex items-center space-x-4 w-full">
                         <span class="w-1/6 font-bold text-lg text-indigo-700">季军:</span>
                         <div class="flex flex-grow rounded-lg overflow-hidden border-2 border-black">
-                            <!-- 季军有1个方块 -->
-                            <div class="w-1/6 bg-red-400 h-10"></div>
+                            <!-- 季军有1个方块，现在加上黑线 -->
+                            <div class="w-1/6 bg-red-400 border-r-2 border-black h-10"></div>
                         </div>
                         <span class="w-1/6"></span>
                     </div>
@@ -132,7 +128,7 @@
                     <p class="mt-2 text-gray-800">冠军的奖金是季军的6倍，总共有RM64 740。那么，季军的奖金是多少呢？</p>
                     <div class="flex items-center space-x-4 mt-4">
                         <span class="text-xl font-bold text-blue-800">RM64 740 ÷ 6 =</span>
-                        <span class="text-xl p-2 text-center rounded-lg border-2 border-green-500 bg-green-50 font-semibold">RM10 790</span>
+                        <span class="text-xl font-semibold">RM10 790</span>
                     </div>
                 </div>
 
@@ -142,7 +138,7 @@
                     <p class="mt-2 text-gray-800">题目说亚军的奖金是季军的2倍。现在我们知道了季军的奖金，怎么算出亚军的呢？</p>
                     <div class="flex items-center space-x-4 mt-4">
                         <span class="text-xl font-bold text-purple-800">RM10 790 × 2 =</span>
-                        <span class="text-xl p-2 text-center rounded-lg border-2 border-green-500 bg-green-50 font-semibold">RM21 580</span>
+                        <span class="text-xl font-semibold">RM21 580</span>
                     </div>
                 </div>
 
@@ -195,8 +191,7 @@
                     <p class="mt-2 text-gray-800 font-semibold">这道题的最终目标是计算谁的奖金？</p>
                     <div class="mt-4 space-y-2">
                         <button data-question="q3" data-value="A" data-correct="false" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">A) 冠军的奖金</button>
-                        <button data-question="q3" data-value="B" data-correct="false" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">B) 季军的奖金</button>
-                        <button data-question="q3" data-value="C" data-correct="true" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">C) 亚军的奖金</button>
+                        <button data-question="q3" data-value="B" data-correct="false" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">C) 亚军的奖金</button>
                     </div>
                     <div class="mt-4 flex justify-center">
                         <button data-check-id="q3" class="qa-check-button px-6 py-2 rounded-full font-bold text-white transition-colors duration-200 bg-indigo-600 hover:bg-indigo-700">检查答案</button>
