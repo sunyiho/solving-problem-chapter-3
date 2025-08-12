@@ -185,20 +185,6 @@
                     <div id="q2-feedback" class="mt-4 p-3 rounded-lg font-semibold border-l-4 text-sm hidden"></div>
                 </div>
 
-                <!-- 问题 3 -->
-                <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-orange-200">
-                    <h3 class="font-bold text-xl text-orange-700">问题 3：</h3>
-                    <p class="mt-2 text-gray-800 font-semibold">这道题的最终目标是计算谁的奖金？</p>
-                    <div class="mt-4 space-y-2">
-                        <button data-question="q3" data-value="A" data-correct="false" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">A) 冠军的奖金</button>
-                        <button data-question="q3" data-value="B" data-correct="false" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">C) 亚军的奖金</button>
-                    </div>
-                    <div class="mt-4 flex justify-center">
-                        <button data-check-id="q3" class="qa-check-button px-6 py-2 rounded-full font-bold text-white transition-colors duration-200 bg-indigo-600 hover:bg-indigo-700">检查答案</button>
-                    </div>
-                    <div id="q3-feedback" class="mt-4 p-3 rounded-lg font-semibold border-l-4 text-sm hidden"></div>
-                </div>
-
             </div>
         </main>
     </div>
@@ -220,16 +206,11 @@
                 correct: '恭喜你，回答正确！',
                 incorrect: '回答错误，再想想哦！因为冠军的奖金是季军的6倍，所以要把冠军的总奖金除以6，才能得到季军的奖金。',
             },
-            'q3': {
-                correct: '很好！记住，做应用题时，一定要看清楚题目最后问的是什么。',
-                incorrect: '回答错误，再想想哦！题目问的是“计算亚军可获得的奖金”。',
-            }
         };
 
         let selectedAnswers = {
             q1: null,
             q2: null,
-            q3: null,
         };
 
         // 监听标签页按钮的点击事件
