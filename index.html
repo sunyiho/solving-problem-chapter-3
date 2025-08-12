@@ -1,309 +1,330 @@
-import React, { useState, useEffect } from 'react';
-import { LayoutPanelLeft, Calculator, HelpCircle } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互动笔记：奖金大挑战！</title>
+    <!-- 引入 Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 设置自定义字体 -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* 针对移动端的小屏幕做一些调整 */
+        @media (max-width: 640px) {
+            .text-3xl { font-size: 1.875rem; /* 30px */ }
+            .text-2xl { font-size: 1.5rem; /* 24px */ }
+            .text-xl { font-size: 1.25rem; /* 20px */ }
+        }
+        /* 淡入动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 sm:p-8">
 
-const App = () => {
-  // State to manage the active tab, defaulting to the first tab (Diagram)
-  const [activeTab, setActiveTab] = useState('diagram');
-
-  // Define the content for each tab
-  const tabs = [
-    { id: 'diagram', label: '图解问题', icon: <LayoutPanelLeft className="h-5 w-5" /> },
-    { id: 'calculation', label: '算式解答', icon: <Calculator className="h-5 w-5" /> },
-    { id: 'qa', label: '问与答', icon: <HelpCircle className="h-5 w-5" /> },
-  ];
-
-  // Tab content components
-  const DiagramTab = () => {
-    // The prize block counts are now static to directly reflect the problem's relationship
-    const championBlocks = 6;
-    const runnerUpBlocks = 2;
-    const thirdPlaceBlocks = 1;
-
-    return (
-      <div className="space-y-6">
-        {/* The problem description from the user's image, now in a styled box */}
-        <div className="p-4 rounded-lg border-2 border-red-400 bg-red-50 shadow-md mt-4">
-          <p className="text-center text-xl font-bold text-red-700">
-            一项比赛的冠军可获得 RM64 740 的奖金，比季军的奖金多5倍。
-            <br />
-            亚军可获得的奖金是季军的2倍。
-            <br />
-            计算亚军可获得的奖金。
-          </p>
-        </div>
-        <p className="text-center text-gray-600">小朋友们，让我们用画图的方式把题目中的关系看清楚吧！</p>
+    <!-- 主容器 -->
+    <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
         
-        <div className="flex flex-col items-center space-y-4">
-          
-          {/* Champion Prize Bar */}
-          <div className="flex items-center space-x-4 w-full">
-            <span className="w-1/6 font-bold text-lg text-indigo-700">冠军:</span>
-            <div className="flex flex-grow rounded-lg overflow-hidden border-2 border-black">
-              {/* Champion has 6 blocks, each representing one part */}
-              {Array.from({ length: championBlocks }).map((_, i) => (
-                <div key={i} className="w-1/6 bg-yellow-400 border-r-2 border-black h-10"></div>
-              ))}
-            </div>
-            <span className="w-1/6 font-bold text-lg text-indigo-700">RM64 740</span>
-          </div>
-
-          {/* Runner-up Prize Bar */}
-          <div className="flex items-center space-x-4 w-full">
-            <span className="w-1/6 font-bold text-lg text-indigo-700">亚军:</span>
-            <div className="flex flex-grow rounded-lg overflow-hidden border-2 border-black">
-              {/* Runner-up has 2 blocks, explicitly showing it's double the third place */}
-              {Array.from({ length: runnerUpBlocks }).map((_, i) => (
-                <div key={i} className="w-1/6 bg-green-400 border-r-2 border-black h-10"></div>
-              ))}
-            </div>
-            <span className="w-1/6"></span>
-          </div>
-          
-          {/* Third Place Prize Bar */}
-          <div className="flex items-center space-x-4 w-full">
-            <span className="w-1/6 font-bold text-lg text-indigo-700">季军:</span>
-            <div className="flex flex-grow rounded-lg overflow-hidden border-2 border-black">
-              {/* Third place has 1 block, representing the base unit */}
-              {Array.from({ length: thirdPlaceBlocks }).map((_, i) => (
-                <div key={i} className="w-1/6 bg-red-400 border-r-2 border-black h-10"></div>
-              ))}
-            </div>
-            <span className="w-1/6"></span>
-          </div>
-        </div>
-        
-        {/* The interactive buttons and dynamic message have been removed */}
-        
-        <div className="mt-8 p-4 bg-blue-100 border-l-4 border-blue-500 text-blue-700 rounded-r-lg shadow-md">
-          <p className="font-bold">总结：</p>
-          <ul className="list-disc list-inside mt-2">
-            <li>冠军： 6个方块 （总价值 RM64 740）</li>
-            <li>亚军： 2个方块</li>
-            <li>季军： 1个方块</li>
-          </ul>
-          <p className="mt-2 font-semibold">哇！现在我们看到啦，冠军的奖金总共是6个小方块的钱，总共是RM64 740。亚军的奖金是2个小方块，季军的奖金是1个小方块。</p>
-        </div>
-      </div>
-    );
-  };
-
-  const CalculationTab = () => {
-    // These values are now hardcoded and displayed directly
-    const step1Result = "10 790";
-    const step2Result = "21 580";
-
-    return (
-      <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-center text-indigo-800">动动脑筋，来算一算！</h2>
-        <p className="text-center text-gray-600">根据刚才的图画，我们把冠军的奖金分成了6个部分。现在，让我们来计算每个部分的价值吧！</p>
-        
-        {/* Step 1 */}
-        <div className="bg-white p-6 rounded-2xl shadow-lg border-2 border-blue-200">
-          <h3 className="font-bold text-xl text-blue-700">第一步：计算季军奖金</h3>
-          <p className="mt-2 text-gray-800">冠军的奖金是季军的6倍，总共有RM64 740。那么，季军的奖金是多少呢？</p>
-          <div className="flex items-center space-x-4 mt-4">
-            <span className="text-xl font-bold text-blue-800">RM64 740 ÷ 6 =</span>
-            <span className="text-xl p-2 text-center rounded-lg border-2 border-green-500 bg-green-50 font-semibold">RM{step1Result}</span>
-          </div>
-        </div>
-
-        {/* Step 2 */}
-        <div className="bg-white p-6 rounded-2xl shadow-lg border-2 border-purple-200">
-          <h3 className="font-bold text-xl text-purple-700">第二步：计算亚军奖金</h3>
-          <p className="mt-2 text-gray-800">题目说亚军的奖金是季军的2倍。现在我们知道了季军的奖金，怎么算出亚军的呢？</p>
-          <div className="flex items-center space-x-4 mt-4">
-            <span className="text-xl font-bold text-purple-800">RM{step1Result} × 2 =</span>
-            <span className="text-xl p-2 text-center rounded-lg border-2 border-green-500 bg-green-50 font-semibold">RM{step2Result}</span>
-          </div>
-        </div>
-
-        {/* Final Answer */}
-        <div className="mt-8 p-6 bg-green-100 rounded-2xl shadow-inner text-center animate-fade-in-up">
-          <h3 className="text-2xl font-bold text-green-700 mb-2">最终答案：</h3>
-          <p className="text-3xl font-extrabold text-green-900">
-            亚军可获得的奖金是 <span className="text-4xl">RM{step2Result}</span>
-          </p>
-        </div>
-      </div>
-    );
-  };
-
-  const QATab = () => {
-    // State for user inputs and check status for each question
-    const [q1Answer, setQ1Answer] = useState('');
-    const [q1Checked, setQ1Checked] = useState(false);
-    const [q2Answer, setQ2Answer] = useState('');
-    const [q2Checked, setQ2Checked] = useState(false);
-    const [q3Answer, setQ3Answer] = useState('');
-    const [q3Checked, setQ3Checked] = useState(false);
-
-    // Helper function to check if the answer is correct
-    const isCorrect = (question, value) => {
-      if (question.options) {
-        return question.options.find(opt => opt.value === value)?.correct;
-      }
-      return value.trim().toLowerCase() === question.correctAnswer.trim().toLowerCase();
-    };
-
-    const questions = [
-      {
-        id: 1,
-        question: '题目里说“冠军的奖金比季军的奖金多5倍”，这是什么意思？',
-        options: [
-          { text: 'A) 冠军奖金 = 季军奖金 × 5', value: 'A' },
-          { text: 'B) 冠军奖金 = 季军奖金 + 季军奖金 × 5', value: 'B', correct: true },
-          { text: 'C) 冠军奖金 = 季军奖金 ÷ 5', value: 'C' },
-        ],
-        state: q1Answer,
-        setState: setQ1Answer,
-        checked: q1Checked,
-        setChecked: setQ1Checked,
-        explanation: '“多5倍”的意思是除了季军的奖金（1倍）之外，还多了5倍，所以冠军的奖金总共是季军的6倍。',
-      },
-      {
-        id: 2,
-        question: '如果冠军的奖金是RM64 740，要算出季军的奖金，我们应该怎么算？',
-        options: [
-          { text: 'A) RM64 740 ÷ 5', value: 'A' },
-          { text: 'B) RM64 740 ÷ 6', value: 'B', correct: true },
-          { text: 'C) RM64 740 × 6', value: 'C' },
-        ],
-        state: q2Answer,
-        setState: setQ2Answer,
-        checked: q2Checked,
-        setChecked: setQ2Checked,
-        explanation: '因为冠军的奖金是季军的6倍，所以要把冠军的总奖金除以6，才能得到季军的奖金。',
-      },
-      {
-        id: 3,
-        question: '这道题的最终目标是计算谁的奖金？',
-        options: [
-          { text: 'A) 冠军的奖金', value: 'A' },
-          { text: 'B) 季军的奖金', value: 'B' },
-          { text: 'C) 亚军的奖金', value: 'C', correct: true },
-        ],
-        state: q3Answer,
-        setState: setQ3Answer,
-        checked: q3Checked,
-        setChecked: setQ3Checked,
-        feedback: '很好！记住，做应用题时，一定要看清楚题目最后问的是什么。',
-        explanation: '题目问的是“计算亚军可获得的奖金”。',
-      },
-    ];
-
-    return (
-      <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-center text-indigo-800">你问我答：我们来复习一下！</h2>
-        {questions.map((q) => (
-          <div key={q.id} className="bg-white p-6 rounded-2xl shadow-lg border-2 border-orange-200">
-            <h3 className="font-bold text-xl text-orange-700">问题 {q.id}：</h3>
-            <p className="mt-2 text-gray-800 font-semibold">{q.question}</p>
-            
-            {q.options ? (
-              <div className="mt-4 space-y-2">
-                {q.options.map((opt) => (
-                  <button
-                    key={opt.value}
-                    onClick={() => q.setState(opt.value)}
-                    className={`block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200
-                      ${q.state === opt.value ? 'bg-blue-100 border-blue-500' : 'bg-gray-50 border-gray-300 hover:bg-gray-100'}
-                      ${q.checked ? (isCorrect(q, opt.value) ? 'bg-green-100 border-green-500' : (q.state === opt.value ? 'bg-red-100 border-red-500' : '')) : ''}
-                      `}
-                    disabled={q.checked}
-                  >
-                    {opt.text}
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <div className="mt-4 flex items-center space-x-2">
-                <input
-                  type="text"
-                  className={`flex-grow p-3 rounded-lg border-2 font-semibold ${q.checked ? (isCorrect(q, q.state) ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50') : 'border-gray-300 bg-gray-50'}`}
-                  value={q.state}
-                  onChange={(e) => q.setState(e.target.value)}
-                  disabled={q.checked}
-                />
-              </div>
-            )}
-            
-            <div className="mt-4 flex justify-center">
-              <button
-                onClick={() => q.setChecked(true)}
-                disabled={q.checked || q.state === ''}
-                className={`px-6 py-2 rounded-full font-bold text-white transition-colors duration-200
-                  ${q.checked || q.state === '' ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'}`}
-              >
-                检查答案
-              </button>
-            </div>
-            
-            {q.checked && (
-              <div className={`mt-4 p-3 rounded-lg font-semibold border-l-4 text-sm animate-fade-in-up
-                  ${isCorrect(q, q.state) ? 'border-green-500 text-green-700' : 'border-red-500 text-red-700'}
-                `}>
-                {isCorrect(q, q.state) ? (
-                  <p>{q.feedback || '恭喜你，回答正确！'}</p>
-                ) : (
-                  <p>
-                    回答错误，再想想哦！{q.options ? q.explanation : ''}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case 'diagram':
-        return <DiagramTab />;
-      case 'calculation':
-        return <CalculationTab />;
-      case 'qa':
-        return <QATab />;
-      default:
-        return <DiagramTab />;
-    }
-  };
-
-  return (
-    <div className="p-4 sm:p-8 bg-gray-100 min-h-screen font-sans">
-      <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
-        
-        {/* Main Header */}
-        <header className="p-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-center">
-          <h1 className="4xl sm:text-5xl font-extrabold tracking-tight">互动笔记</h1>
+        <!-- 头部 -->
+        <header class="p-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-center">
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">互动笔记</h1>
         </header>
 
-        {/* Tab Navigation */}
-        <nav className="flex bg-gray-50 border-b border-gray-200">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 flex items-center justify-center space-x-2 py-4 px-2 border-b-4 font-bold text-lg transition-all duration-300
-                ${activeTab === tab.id 
-                  ? 'border-indigo-500 text-indigo-700 bg-white' 
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-100'}`
-              }
-            >
-              {tab.icon}
-              <span>{tab.label}</span>
+        <!-- 标签页导航 -->
+        <nav class="flex bg-gray-50 border-b border-gray-200" id="tab-nav">
+            <button data-tab="diagram" class="tab-button flex-1 flex items-center justify-center space-x-2 py-4 px-2 border-b-4 font-bold text-lg transition-all duration-300 border-indigo-500 text-indigo-700 bg-white">
+                <!-- SVG图标: 图解问题 -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+                <span>图解问题</span>
             </button>
-          ))}
+            <button data-tab="calculation" class="tab-button flex-1 flex items-center justify-center space-x-2 py-4 px-2 border-b-4 font-bold text-lg transition-all duration-300 border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-100">
+                <!-- SVG图标: 算式解答 -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+                <span>算式解答</span>
+            </button>
+            <button data-tab="qa" class="tab-button flex-1 flex items-center justify-center space-x-2 py-4 px-2 border-b-4 font-bold text-lg transition-all duration-300 border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-100">
+                <!-- SVG图标: 问与答 -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                <span>问与答</span>
+            </button>
         </nav>
 
-        {/* Tab Content */}
-        <main className="p-6 sm:p-8">
-          {renderTabContent()}
-        </main>
-      </div>
-    </div>
-  );
-};
+        <!-- 标签页内容区域 -->
+        <main class="p-6 sm:p-8">
+            <!-- 图解问题 标签页内容 -->
+            <div id="tab-content-diagram" class="space-y-6">
+                <div class="p-4 rounded-lg border-2 border-red-400 bg-red-50 shadow-md mt-4">
+                    <p class="text-center text-xl font-bold text-red-700">
+                        一项比赛的冠军可获得 RM64 740 的奖金，比季军的奖金多5倍。
+                        <br />
+                        亚军可获得的奖金是季军的2倍。
+                        <br />
+                        计算亚军可获得的奖金。
+                    </p>
+                </div>
+                <p class="text-center text-gray-600">小朋友们，让我们用画图的方式把题目中的关系看清楚吧！</p>
+                
+                <div class="flex flex-col items-center space-y-4">
+                    
+                    <!-- 冠军奖金条 -->
+                    <div class="flex items-center space-x-4 w-full">
+                        <span class="w-1/6 font-bold text-lg text-indigo-700">冠军:</span>
+                        <div class="flex flex-grow rounded-lg overflow-hidden border-2 border-black">
+                            <!-- 冠军有6个方块 -->
+                            <div class="w-1/6 bg-yellow-400 border-r-2 border-black h-10"></div>
+                            <div class="w-1/6 bg-yellow-400 border-r-2 border-black h-10"></div>
+                            <div class="w-1/6 bg-yellow-400 border-r-2 border-black h-10"></div>
+                            <div class="w-1/6 bg-yellow-400 border-r-2 border-black h-10"></div>
+                            <div class="w-1/6 bg-yellow-400 border-r-2 border-black h-10"></div>
+                            <div class="w-1/6 bg-yellow-400 h-10"></div>
+                        </div>
+                        <span class="w-1/6 font-bold text-lg text-indigo-700">RM64 740</span>
+                    </div>
 
-export default App;
+                    <!-- 亚军奖金条 -->
+                    <div class="flex items-center space-x-4 w-full">
+                        <span class="w-1/6 font-bold text-lg text-indigo-700">亚军:</span>
+                        <div class="flex flex-grow rounded-lg overflow-hidden border-2 border-black">
+                            <!-- 亚军有2个方块 -->
+                            <div class="w-1/6 bg-green-400 border-r-2 border-black h-10"></div>
+                            <div class="w-1/6 bg-green-400 h-10"></div>
+                        </div>
+                        <span class="w-1/6"></span>
+                    </div>
+                    
+                    <!-- 季军奖金条 -->
+                    <div class="flex items-center space-x-4 w-full">
+                        <span class="w-1/6 font-bold text-lg text-indigo-700">季军:</span>
+                        <div class="flex flex-grow rounded-lg overflow-hidden border-2 border-black">
+                            <!-- 季军有1个方块 -->
+                            <div class="w-1/6 bg-red-400 h-10"></div>
+                        </div>
+                        <span class="w-1/6"></span>
+                    </div>
+                </div>
+                
+                <div class="mt-8 p-4 bg-blue-100 border-l-4 border-blue-500 text-blue-700 rounded-r-lg shadow-md">
+                    <p class="font-bold">总结：</p>
+                    <ul class="list-disc list-inside mt-2">
+                        <li>冠军： 6个方块 （总价值 RM64 740）</li>
+                        <li>亚军： 2个方块</li>
+                        <li>季军： 1个方块</li>
+                    </ul>
+                    <p class="mt-2 font-semibold">哇！现在我们看到啦，冠军的奖金总共是6个小方块的钱，总共是RM64 740。亚军的奖金是2个小方块，季军的奖金是1个小方块。</p>
+                </div>
+            </div>
+
+            <!-- 算式解答 标签页内容 (初始隐藏) -->
+            <div id="tab-content-calculation" class="space-y-6 hidden">
+                <h2 class="text-2xl font-bold text-center text-indigo-800">动动脑筋，来算一算！</h2>
+                <p class="text-center text-gray-600">根据刚才的图画，我们把冠军的奖金分成了6个部分。现在，让我们来计算每个部分的价值吧！</p>
+                
+                <!-- 第一步 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-blue-200">
+                    <h3 class="font-bold text-xl text-blue-700">第一步：计算季军奖金</h3>
+                    <p class="mt-2 text-gray-800">冠军的奖金是季军的6倍，总共有RM64 740。那么，季军的奖金是多少呢？</p>
+                    <div class="flex items-center space-x-4 mt-4">
+                        <span class="text-xl font-bold text-blue-800">RM64 740 ÷ 6 =</span>
+                        <span class="text-xl p-2 text-center rounded-lg border-2 border-green-500 bg-green-50 font-semibold">RM10 790</span>
+                    </div>
+                </div>
+
+                <!-- 第二步 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-purple-200">
+                    <h3 class="font-bold text-xl text-purple-700">第二步：计算亚军奖金</h3>
+                    <p class="mt-2 text-gray-800">题目说亚军的奖金是季军的2倍。现在我们知道了季军的奖金，怎么算出亚军的呢？</p>
+                    <div class="flex items-center space-x-4 mt-4">
+                        <span class="text-xl font-bold text-purple-800">RM10 790 × 2 =</span>
+                        <span class="text-xl p-2 text-center rounded-lg border-2 border-green-500 bg-green-50 font-semibold">RM21 580</span>
+                    </div>
+                </div>
+
+                <!-- 最终答案 -->
+                <div class="mt-8 p-6 bg-green-100 rounded-2xl shadow-inner text-center animate-fade-in-up">
+                    <h3 class="text-2xl font-bold text-green-700 mb-2">最终答案：</h3>
+                    <p class="text-3xl font-extrabold text-green-900">
+                        亚军可获得的奖金是 <span class="text-4xl">RM21 580</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 问与答 标签页内容 (初始隐藏) -->
+            <div id="tab-content-qa" class="space-y-6 hidden">
+                <h2 class="text-2xl font-bold text-center text-indigo-800">你问我答：我们来复习一下！</h2>
+
+                <!-- 问题 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-orange-200">
+                    <h3 class="font-bold text-xl text-orange-700">问题 1：</h3>
+                    <p class="mt-2 text-gray-800 font-semibold">题目里说“冠军的奖金比季军的奖金多5倍”，这是什么意思？</p>
+                    <div class="mt-4 space-y-2">
+                        <button data-question="q1" data-value="A" data-correct="false" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">A) 冠军奖金 = 季军奖金 × 5</button>
+                        <button data-question="q1" data-value="B" data-correct="true" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">B) 冠军奖金 = 季军奖金 + 季军奖金 × 5</button>
+                        <button data-question="q1" data-value="C" data-correct="false" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">C) 冠军奖金 = 季军奖金 ÷ 5</button>
+                    </div>
+                    <div class="mt-4 flex justify-center">
+                        <button data-check-id="q1" class="qa-check-button px-6 py-2 rounded-full font-bold text-white transition-colors duration-200 bg-indigo-600 hover:bg-indigo-700">检查答案</button>
+                    </div>
+                    <div id="q1-feedback" class="mt-4 p-3 rounded-lg font-semibold border-l-4 text-sm hidden"></div>
+                </div>
+
+                <!-- 问题 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-orange-200">
+                    <h3 class="font-bold text-xl text-orange-700">问题 2：</h3>
+                    <p class="mt-2 text-gray-800 font-semibold">如果冠军的奖金是RM64 740，要算出季军的奖金，我们应该怎么算？</p>
+                    <div class="mt-4 space-y-2">
+                        <button data-question="q2" data-value="A" data-correct="false" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">A) RM64 740 ÷ 5</button>
+                        <button data-question="q2" data-value="B" data-correct="true" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">B) RM64 740 ÷ 6</button>
+                        <button data-question="q2" data-value="C" data-correct="false" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">C) RM64 740 × 6</button>
+                    </div>
+                    <div class="mt-4 flex justify-center">
+                        <button data-check-id="q2" class="qa-check-button px-6 py-2 rounded-full font-bold text-white transition-colors duration-200 bg-indigo-600 hover:bg-indigo-700">检查答案</button>
+                    </div>
+                    <div id="q2-feedback" class="mt-4 p-3 rounded-lg font-semibold border-l-4 text-sm hidden"></div>
+                </div>
+
+                <!-- 问题 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-orange-200">
+                    <h3 class="font-bold text-xl text-orange-700">问题 3：</h3>
+                    <p class="mt-2 text-gray-800 font-semibold">这道题的最终目标是计算谁的奖金？</p>
+                    <div class="mt-4 space-y-2">
+                        <button data-question="q3" data-value="A" data-correct="false" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">A) 冠军的奖金</button>
+                        <button data-question="q3" data-value="B" data-correct="false" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">B) 季军的奖金</button>
+                        <button data-question="q3" data-value="C" data-correct="true" class="qa-option block w-full text-left p-3 rounded-lg border-2 transition-colors duration-200 bg-gray-50 border-gray-300 hover:bg-gray-100">C) 亚军的奖金</button>
+                    </div>
+                    <div class="mt-4 flex justify-center">
+                        <button data-check-id="q3" class="qa-check-button px-6 py-2 rounded-full font-bold text-white transition-colors duration-200 bg-indigo-600 hover:bg-indigo-700">检查答案</button>
+                    </div>
+                    <div id="q3-feedback" class="mt-4 p-3 rounded-lg font-semibold border-l-4 text-sm hidden"></div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 获取所有标签按钮和内容
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('main > div');
+        const qaOptions = document.querySelectorAll('.qa-option');
+        const qaCheckButtons = document.querySelectorAll('.qa-check-button');
+
+        // 问答题的解释和反馈
+        const qaFeedback = {
+            'q1': {
+                correct: '恭喜你，回答正确！',
+                incorrect: '回答错误，再想想哦！“多5倍”的意思是除了季军的奖金（1倍）之外，还多了5倍，所以冠军的奖金总共是季军的6倍。',
+            },
+            'q2': {
+                correct: '恭喜你，回答正确！',
+                incorrect: '回答错误，再想想哦！因为冠军的奖金是季军的6倍，所以要把冠军的总奖金除以6，才能得到季军的奖金。',
+            },
+            'q3': {
+                correct: '很好！记住，做应用题时，一定要看清楚题目最后问的是什么。',
+                incorrect: '回答错误，再想想哦！题目问的是“计算亚军可获得的奖金”。',
+            }
+        };
+
+        let selectedAnswers = {
+            q1: null,
+            q2: null,
+            q3: null,
+        };
+
+        // 监听标签页按钮的点击事件
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.dataset.tab;
+
+                // 移除所有标签按钮的激活状态
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('border-indigo-500', 'text-indigo-700', 'bg-white');
+                    btn.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:bg-gray-100');
+                });
+
+                // 隐藏所有标签页内容
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+
+                // 为当前点击的按钮添加激活状态
+                button.classList.add('border-indigo-500', 'text-indigo-700', 'bg-white');
+                button.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:bg-gray-100');
+
+                // 显示对应的标签页内容
+                document.getElementById(`tab-content-${targetTab}`).classList.remove('hidden');
+            });
+        });
+
+        // 监听问答题选项的点击事件
+        qaOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const questionId = option.dataset.question;
+                const value = option.dataset.value;
+
+                // 移除同一问题下所有选项的选中状态
+                document.querySelectorAll(`.qa-option[data-question="${questionId}"]`).forEach(opt => {
+                    opt.classList.remove('bg-blue-100', 'border-blue-500');
+                    opt.classList.add('bg-gray-50', 'border-gray-300', 'hover:bg-gray-100');
+                });
+
+                // 为当前选项添加选中状态
+                option.classList.add('bg-blue-100', 'border-blue-500');
+                option.classList.remove('bg-gray-50', 'border-gray-300', 'hover:bg-gray-100');
+                
+                selectedAnswers[questionId] = value;
+            });
+        });
+        
+        // 监听“检查答案”按钮的点击事件
+        qaCheckButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const questionId = button.dataset.checkId;
+                const feedbackDiv = document.getElementById(`${questionId}-feedback`);
+                const options = document.querySelectorAll(`.qa-option[data-question="${questionId}"]`);
+                const selectedOption = document.querySelector(`.qa-option[data-question="${questionId}"][data-value="${selectedAnswers[questionId]}"]`);
+
+                // 如果没有选择任何答案，则不执行任何操作
+                if (!selectedOption) {
+                    return;
+                }
+
+                const isCorrect = selectedOption.dataset.correct === 'true';
+
+                // 禁用所有选项和检查按钮
+                options.forEach(opt => {
+                    opt.disabled = true;
+                });
+                button.disabled = true;
+                button.classList.add('bg-gray-400', 'cursor-not-allowed');
+                button.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+
+                // 显示反馈信息
+                feedbackDiv.classList.remove('hidden');
+                feedbackDiv.textContent = isCorrect ? qaFeedback[questionId].correct : qaFeedback[questionId].incorrect;
+                feedbackDiv.classList.remove('border-green-500', 'text-green-700', 'border-red-500', 'text-red-700');
+                feedbackDiv.classList.add(isCorrect ? 'border-green-500' : 'border-red-500', isCorrect ? 'text-green-700' : 'text-red-700');
+                
+                // 根据答案正确与否更新选项样式
+                options.forEach(opt => {
+                    const isOptionCorrect = opt.dataset.correct === 'true';
+                    if (isOptionCorrect) {
+                        opt.classList.remove('bg-gray-50', 'border-gray-300', 'bg-blue-100', 'border-blue-500');
+                        opt.classList.add('bg-green-100', 'border-green-500');
+                    } else if (opt.dataset.value === selectedAnswers[questionId]) {
+                        opt.classList.remove('bg-blue-100', 'border-blue-500', 'bg-gray-50', 'border-gray-300');
+                        opt.classList.add('bg-red-100', 'border-red-500');
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>
